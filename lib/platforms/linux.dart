@@ -86,6 +86,7 @@ class LinuxProtocolRegistry extends ProtocolRegistryModel {
     return false;
   }
 
+  /// Returns content of `.desktop` file with only `Name` and `Exec`.
   String getEntry(ProtocolScheme scheme) {
     if (scheme.appPath == null) {
       throw ArgumentError.notNull('scheme.appPath');
@@ -105,6 +106,7 @@ MimeType=x-scheme-handler/${scheme.scheme};
         .trim();
   }
 
+  /// Returns suitable path for the scheme's `.desktop` file.
   String getDesktopFilePath(ProtocolScheme scheme) => p.join(
         Platform.environment['HOME']!,
         '.local',
@@ -113,12 +115,14 @@ MimeType=x-scheme-handler/${scheme.scheme};
         '${scheme.scheme}.desktop',
       );
 
+  /// Used to install a `.desktop` file. Recommended to pass path from [getDesktopFilePath] to [path].
   Future<void> installDesktopFile(String path, ProtocolScheme scheme) async =>
       Process.run(
         'xdg-mime',
         <String>['default', path, 'x-scheme-handler/${scheme.scheme}'],
       );
 
+  /// Tries to resolve path from a `./desktop` filename. Only checks the `~/.local/share/applications` folder.
   Future<File?> findDesktopFile(String filename) async {
     final File file = File(
       getDesktopFilePath(
@@ -130,6 +134,7 @@ MimeType=x-scheme-handler/${scheme.scheme};
     return await file.exists() ? file : null;
   }
 
+  /// Returns the `.desktop` filename that contains the [scheme.scheme].
   Future<String?> findDesktopFileWithScheme(ProtocolScheme scheme) async {
     final ProcessResult result = await Process.run(
       'xdg-mime',

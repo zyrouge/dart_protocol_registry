@@ -10,6 +10,7 @@ export './platforms/model.dart';
 export './platforms/windows.dart';
 export 'registry_scheme.dart';
 
+/// Gives the corresponding registry of the platform. Supports Windows and MacOS.
 ProtocolRegistryModel getRegistry() {
   if (Platform.isLinux) return LinuxProtocolRegistry();
   if (Platform.isWindows) return WindowsProtocolRegistry();
