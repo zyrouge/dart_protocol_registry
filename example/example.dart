@@ -1,9 +1,10 @@
+import 'dart:io';
 import 'package:protocol_registry/protocol_registry.dart';
 
 final ProtocolScheme scheme = ProtocolScheme(
   appName: 'Test App',
   scheme: 'some-thing-that-doesnt-exist',
-  appPath: 'testing',
+  appPath: Platform.resolvedExecutable,
 );
 
 Future<void> main(List<String> args) async {
