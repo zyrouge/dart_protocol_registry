@@ -6,3 +6,7 @@
 # 0.0.1
 
 - Added documentation comments
+
+# 0.0.2
+
+- Removed unused dependencies
