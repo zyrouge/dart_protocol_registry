@@ -9,7 +9,7 @@ class WindowsProtocolRegistry extends ProtocolRegistryModel {
       'REG',
       <String>[
         'QUERY',
-        '"HKCU\\Software\\Classes\\${scheme.scheme}\\shell\\open\\command"',
+        'HKCU\\Software\\Classes\\${scheme.scheme}\\shell\\open\\command',
         '/s'
       ],
     );
@@ -36,7 +36,7 @@ class WindowsProtocolRegistry extends ProtocolRegistryModel {
       'REG',
       <String>[
         'ADD',
-        '"HKCU\\Software\\Classes\\${scheme.scheme}\\shell\\open\\command"',
+        'HKCU\\Software\\Classes\\${scheme.scheme}\\shell\\open\\command',
         '/ve',
         '/d',
         '"${scheme.appPath}" "%1"',
@@ -55,7 +55,7 @@ class WindowsProtocolRegistry extends ProtocolRegistryModel {
       'REG',
       <String>[
         'DELETE',
-        '"HKCU\\Software\\Classes\\${scheme.scheme}\\shell\\open\\command"',
+        'HKCU\\Software\\Classes\\${scheme.scheme}\\shell\\open\\command',
         '/f'
       ],
     );
