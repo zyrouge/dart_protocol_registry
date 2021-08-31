@@ -10,3 +10,7 @@
 # 0.0.2
 
 - Removed unused dependencies
+
+# 0.0.3
+
+- Removed quotes in registry key paths
