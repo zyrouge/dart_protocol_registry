@@ -11,7 +11,7 @@ class WindowsProtocolRegistry extends ProtocolRegistryModel {
         'QUERY',
         'HKCU\\Software\\Classes\\${scheme.scheme}',
         '/v',
-        '"URL Protocol"'
+        'URL Protocol'
       ],
     );
 
@@ -25,7 +25,7 @@ class WindowsProtocolRegistry extends ProtocolRegistryModel {
     );
 
     try {
-      return result1.stdout.toString().contains("URL Protocol")
+      return result1.stdout.toString().contains('URL Protocol')
           ? RegExp(
               '.*?\\n\\s+\\(Default\\)\\s+REG_SZ\\s+"?([^ "]+)',
             ).firstMatch(result2.stdout.toString())?.group(1)?.trim()
@@ -50,7 +50,7 @@ class WindowsProtocolRegistry extends ProtocolRegistryModel {
         'ADD',
         'HKCU\\Software\\Classes\\${scheme.scheme}',
         '/v',
-        '"URL Protocol"',
+        'URL Protocol',
         '/f'
       ],
     );
@@ -81,7 +81,7 @@ class WindowsProtocolRegistry extends ProtocolRegistryModel {
         'DELETE',
         'HKCU\\Software\\Classes\\${scheme.scheme}',
         '/v',
-        '"URL Protocol"',
+        'URL Protocol',
         '/f'
       ],
     );

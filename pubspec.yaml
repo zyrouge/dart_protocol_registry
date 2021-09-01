@@ -1,6 +1,6 @@
 name: protocol_registry
 description: Register/query/remove URI Schemes without hassle. Available for Windows and Linux.
-version: 0.0.4
+version: 0.0.5
 repository: https://github.com/zyrouge/dart_protocol_registry
 
 environment:

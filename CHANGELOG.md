@@ -18,3 +18,7 @@
 # 0.0.4
 
 - Add "URL Protocol" in regsitry so windows actually finds it
+
+# 0.0.5
+
+- Removed double quotes to avoid complications
