@@ -5,7 +5,17 @@ import '../registry_scheme.dart';
 class WindowsProtocolRegistry extends ProtocolRegistryModel {
   @override
   Future<String?> find(ProtocolScheme scheme) async {
-    final ProcessResult result = await Process.run(
+    final ProcessResult result1 = await Process.run(
+      'REG',
+      <String>[
+        'QUERY',
+        'HKCU\\Software\\Classes\\${scheme.scheme}',
+        '/v',
+        '"URL Protocol"'
+      ],
+    );
+
+    final ProcessResult result2 = await Process.run(
       'REG',
       <String>[
         'QUERY',
@@ -15,9 +25,11 @@ class WindowsProtocolRegistry extends ProtocolRegistryModel {
     );
 
     try {
-      return RegExp(
-        '.*?\\n\\s+\\(Default\\)\\s+REG_SZ\\s+"?([^ "]+)',
-      ).firstMatch(result.stdout.toString())?.group(1)?.trim();
+      return result1.stdout.toString().contains("URL Protocol")
+          ? RegExp(
+              '.*?\\n\\s+\\(Default\\)\\s+REG_SZ\\s+"?([^ "]+)',
+            ).firstMatch(result2.stdout.toString())?.group(1)?.trim()
+          : null;
     } catch (_) {}
   }
 
@@ -32,7 +44,18 @@ class WindowsProtocolRegistry extends ProtocolRegistryModel {
       throw ArgumentError.notNull('scheme.appPath');
     }
 
-    final ProcessResult result = await Process.run(
+    final ProcessResult result1 = await Process.run(
+      'REG',
+      <String>[
+        'ADD',
+        'HKCU\\Software\\Classes\\${scheme.scheme}',
+        '/v',
+        '"URL Protocol"',
+        '/f'
+      ],
+    );
+
+    final ProcessResult result2 = await Process.run(
       'REG',
       <String>[
         'ADD',
@@ -46,12 +69,24 @@ class WindowsProtocolRegistry extends ProtocolRegistryModel {
       ],
     );
 
-    return _isSuccessful(result.stdout.toString());
+    return _isSuccessful(result1.stdout.toString()) &&
+        _isSuccessful(result2.stdout.toString());
   }
 
   @override
   Future<bool> remove(ProtocolScheme scheme) async {
-    final ProcessResult result = await Process.run(
+    final ProcessResult result1 = await Process.run(
+      'REG',
+      <String>[
+        'DELETE',
+        'HKCU\\Software\\Classes\\${scheme.scheme}',
+        '/v',
+        '"URL Protocol"',
+        '/f'
+      ],
+    );
+
+    final ProcessResult result2 = await Process.run(
       'REG',
       <String>[
         'DELETE',
@@ -60,7 +95,8 @@ class WindowsProtocolRegistry extends ProtocolRegistryModel {
       ],
     );
 
-    return _isSuccessful(result.stdout.toString());
+    return _isSuccessful(result1.stdout.toString()) &&
+        _isSuccessful(result2.stdout.toString());
   }
 
   bool _isSuccessful(String res) =>

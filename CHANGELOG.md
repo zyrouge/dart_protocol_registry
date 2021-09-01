@@ -14,3 +14,7 @@
 # 0.0.3
 
 - Removed quotes in registry key paths
+
+# 0.0.4
+
+- Add "URL Protocol" in regsitry so windows actually finds it
